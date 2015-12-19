@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mob</groupId>
+    <artifactId>kafkaDemo</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+
+    <modules>
+        <module>kafkaConsumer</module>
+        <module>kafkaProducer</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>3.1.4.RELEASE</spring.version>
+        <slf4j.version>1.6.6</slf4j.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>lamfire-repos</id>
+            <url>http://mvn.lamfire.com:8081/nexus/content/repositories/lamfire/</url>
+        </repository>
+    </repositories>
+
+        <dependencies>
+        	<!-- log -->
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.16</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <!-- zkclient  -->
+            <dependency>
+                <groupId>com.github.sgroschupf</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>0.1</version>
+            </dependency>
+            <!--  zookeeper -->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>3.3.6</version>
+            </dependency>
+			<!--  netty -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty</artifactId>
+                <version>3.9.5.Final</version>
+            </dependency>
+			<!--  lamfire -->
+            <dependency>
+                <groupId>com.lamfire</groupId>
+                <artifactId>lamfire</artifactId>
+                <version>2.3.9</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lamfire</groupId>
+                <artifactId>warden</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lamfire</groupId>
+                <artifactId>redis-helper</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lamfire</groupId>
+                <artifactId>jmongo</artifactId>
+                <version>1.0.5</version>
+            </dependency>
+            <!--  kafka -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka_2.10</artifactId>
+                <version>0.8.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-pool</groupId>
+                <artifactId>commons-pool</artifactId>
+                <version>1.6</version>
+            </dependency>
+            <!--  junit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.2</version>
+            </dependency>
+        </dependencies>
+        
+    <build>
+         <plugins>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+                 <version>2.3.2</version>
+                 <configuration>
+                     <source>1.7</source>
+                     <target>1.7</target>
+                     <showDeprecation>false</showDeprecation>
+                     <showWarnings>true</showWarnings>
+                 </configuration>
+             </plugin>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-surefire-plugin</artifactId>
+                 <configuration>
+                     <skipTests>true</skipTests>
+                 </configuration>
+             </plugin>
+
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-source-plugin</artifactId>
+                 <executions>
+                     <execution>
+                         <id>attach-sources</id>
+                         <goals>
+                             <goal>jar</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+             </plugin>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-jar-plugin</artifactId>
+                 <version>2.4</version>
+                 <configuration>
+                     <includes>
+                         <!--<include>**/*.properties</include>-->
+                         <include>**/*.class</include>
+                     </includes>
+                     <excludes>
+                         <exclude>**/*Test.class</exclude>
+                     </excludes>
+                 </configuration>
+             </plugin>
+
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-dependency-plugin</artifactId>
+                 <executions>
+                     <execution>
+                         <id>copy-dependencies</id>
+                         <phase>package</phase>
+                         <goals>
+                             <goal>copy-dependencies</goal>
+                         </goals>
+                         <configuration>
+                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                             <overWriteReleases>false</overWriteReleases>
+                             <overWriteSnapshots>false</overWriteSnapshots>
+                             <overWriteIfNewer>true</overWriteIfNewer>
+                             <excludeScope>provided</excludeScope>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>
+         </plugins>
+    </build>
+    
+</project>
